@@ -1,17 +1,20 @@
 var socket = new io.Socket(null,
                            {port:8001, rememberTransport:false});
 
-var play = true;
+var play = null;
 socket.connect();
 socket.on('connect', function (msg) {
-    console.log('connected');
+    play = msg;
+    console.log('connected: %s', play);
 });
 
 socket.on('message', function(msg) {
     if (msg == 'play') {
         play = true;
+        $('video')[0].play();
     } else {
         play = false;
+        $('video')[0].pause();
     }
     console.log(msg);
 });
@@ -56,5 +59,6 @@ function loop() {
             particle.scale.x = particle.scale.y += 1*(Math.sin(time)+Math.random(i));
         }
     }
-    renderer.render(scene, camera);
+    //renderer.render(scene, camera);
 }
+
