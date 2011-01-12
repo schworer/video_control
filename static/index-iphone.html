@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>node.js video controller</title>
+        <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript"> google.load("jquery", "1.4.2"); </script>
+        <script src="./js/jqtouch.min.js" type="application/x-javascript" charset="utf-8"></script>
+        <style type="text/css" media="screen">@import "./css/jqtouch.min.css";</style>
+        <style type="text/css" media="screen">@import "./jqt/theme.css";</style>
+        <script src="./js/client-iphone.js"></script>
+    </head>
+    <body>
+        <div id="jqt">
+            <div id="home">
+                <div class="toolbar">
+                    <h1>node.js Video</h1>
+                </div>
+                <ul class="edgetoedge">
+                    <li class="arrow"><a href="#playbar">Controller</a></li>
+                    <li class="arrow"><a href="#about">About</a></li>
+                </ul>
+            </div>
+            <div id="about">
+                <div class="toolbar">
+                    <h1>About</h1>
+                    <a class="button back" href="#">Back</a>
+                </div>
+                <div>
+                    <p>interact with a video server written in node.js from the iPhone.</p>
+                </div>
+            </div>
+            <div id="playbar">
+                <div class="toolbar">
+                    <h1>Controller</h1>
+                    <a class="button back" href="#">Back</a>
+                </div>
+                <div class="rounded">
+                    <ul class="rounded">
+                        <li><a id="playButton" href="#" class="whiteButton">Play</a></li>
+                        <li>Volume<span id="volumeToggle" class="toggle"><input id="volCheck" type="checkbox" checked="yes"/></span></li>
+                </div>
+                <div id="vol">
+                    <ul class="individual">
+                        <li class="forward"><a id="downVol" href="#" class="whiteButton">Volume Down</a></li>
+                        <li><a id="upVol" href="#" class="whiteButton">Volume Up</a></li>
+                    </ul>
+                    <div id="volLabel"></div>
+                </div>
+                </div>
+
+                </div>
+                <div class="info">
+                    mobile video controller built with jQTouch
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

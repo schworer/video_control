@@ -1,64 +1,77 @@
-var socket = new io.Socket(null,
-                           {port:8001, rememberTransport:false});
+$(function() {
+    var socket = new io.Socket(null,
+                               {port:8001, rememberTransport:false});
 
-var play = null;
-socket.connect();
-socket.on('connect', function (msg) {
-    play = msg;
-    console.log('connected: %s', play);
-});
+    var play = null;
+    var curTime = null;
 
-socket.on('message', function(msg) {
-    if (msg == 'play') {
-        play = true;
-        $('video')[0].play();
-    } else {
-        play = false;
-        $('video')[0].pause();
-    }
-    console.log(msg);
-});
+    socket.connect();
 
-var camera, scene, renderer;
-init();
-setInterval(loop, 1000/60);
+    // tells the server that the client is ready for data
+    socket.send('init');
 
-function init() {
-    camera = new THREE.Camera(75,
-                window.innerWidth/window.innerHeight,
-                1,
-                10000);
+    socket.on('message', function(msg) {
+        console.log('received: ' + msg);
+        msg = JSON.parse(msg);
+        command = msg[0];
+        data = msg[1];
+        video = $('video').get(0);
 
-    camera.position.z = 1000;
-    scene = new THREE.Scene();
-
-    // plot each pixel in 
-    for (var i = 0; i < 1000; i++) {
-        var particle = new THREE.Particle(
-                new THREE.ParticleCircleMaterial(
-                    { color: Math.random() * 0x808080 + 0x808080 } 
-                )
-                );
-        particle.position.x = Math.random() * 2000 - 1000;
-        particle.position.y = Math.random() * 2000 - 1000;
-        particle.position.z = Math.random() * 2000 - 1000;
-        particle.scale.x = particle.scale.y = Math.random() * 10 + 5;
-        scene.addObject(particle);
-    }
-    renderer = new THREE.CanvasRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-}
-
-function loop() {
-    date = new Date();
-    time = date.getTime();
-    if (play == true) {
-        for (i=0, il = scene.objects.length; i < il; i++) {
-            particle = scene.objects[i];
-            particle.scale.x = particle.scale.y += 1*(Math.sin(time)+Math.random(i));
+        switch(command) {
+            case 'play':
+                if (data != null) {
+                    video.currentTime = data;
+                }
+                // if this is the first time this message has been sent,
+                // set to autoplay
+                if (play == null) {
+                    video.autoplay = true;
+                } else {
+                    video.play();
+                }
+                play = true;
+                break;
+            case 'pause':
+                if (data != null) {
+                    video.currentTime = data;
+                }
+                video.pause();
+                play = false;
+                break;
+            case 'volume':
+                if (data != null) {
+                    video.volume = data;
+                }
+                break;
+            case 'init':
+                play = data['play'];
+                curTime = data['time'];
+                volume = data['volume'];
+                video.currentTime = curTime;
+                video.volume = volume;
+                if (play == true) {
+                    video.play();
+                }
+                break;
+            default:
+                console.log("this command no good: " + command);
         }
-    }
-    //renderer.render(scene, camera);
-}
+    });
 
+    /*
+    $(window).keypress(function (event) {
+        if (event.which == 32) {
+            // when spacebar is pressed, flip the state of play and send it and the
+            // current time to the server
+            play ^= 1;
+
+            curTime = $('video')[0].currentTime;
+            if (play == true) {
+                socket.send(JSON.stringify(['play', curTime]));
+            } else {
+                socket.send(JSON.stringify(['pause', curTime]));
+            }
+        }
+    });
+    */
+});
