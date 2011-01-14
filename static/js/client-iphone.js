@@ -51,7 +51,7 @@ $.jQTouch({
 });
 
 $(function() {
-    console.log('where am i?');
+    var counter = null;
     $('#downVol').tap(function() {
         if (volume >= 0.0) {
             volume -= 0.1;
@@ -72,16 +72,23 @@ $(function() {
         if (play == false) {
             $(this).text('Play');
             socket.send(JSON.stringify(['pause', curTime]));
+            clearInterval(counter);
         } else {
             $(this).text('Pause');
+            counter = setInterval(function () {
+                $('#curTime').text(curTime);
+                curTime += 0.1;
+            }, 10);
+
             socket.send(JSON.stringify(['play', curTime]));
         }
     });
 
+    /*
     $('#volumeToggle').tap(function() {
         volume = volume ? 0.0 : 1.0;
         $('#volCheck').get(0).checked = volume;
         socket.send(JSON.stringify(['volume', volume]));
-        console.log('Tapped!');
     });
+    */
 });
