@@ -50,6 +50,10 @@ socket.on('connection', function(client) {
             // broadcast a command to set the volume
             socket.broadcast(JSON.stringify(['volume', data]));
         },
+        time: function (data) {
+            curTime = data;
+            socket.broadcast(JSON.stringify(['time', data]));
+        },
         init: function (client) {
             init_data = {
                 play: play,
