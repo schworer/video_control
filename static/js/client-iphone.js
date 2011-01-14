@@ -16,16 +16,17 @@ socket.on('message', function(msg) {
                 play = data['play'];
                 curTime = data['time'];
                 volume = data['vol'];
+                $('#volume').text(volume);
                 break;
+            case 'volume':
+                volume = data;
+                $('#volume').text(volume);
+                break;
+            case 'time':
+                curTime = data;
+                break
         }
 });
-
-function toggleVolume() {
-    // flip that bool around
-    volume = volume ? 0.0 : 1.0;
-    $('#volCheck').checked = volume;
-    socket.send(JSON.stringify(['volume', volume]));
-}
 
 socket.on('message', function(msg) {
     msg = JSON.parse(msg);
