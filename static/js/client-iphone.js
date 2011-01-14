@@ -1,4 +1,4 @@
-var socket = new io.Socket(null,{port:8001, rememberTransport:false});
+var socket = new io.Socket(null,{port:80, rememberTransport:false});
 
 var play = null;
 var curTime = null;

@@ -85,7 +85,7 @@ socket.on('connection', function(client) {
     });
 });
 
-var PORT = process.env.PORT || 8001;
+var PORT = process.env.PORT || 80;
 app.listen(PORT);
 console.log('server running at http://localhost:%s/', PORT);
 

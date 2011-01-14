@@ -39,7 +39,7 @@ function initialize_controller() {
     curTime = null;
     volume = null;
 
-    socket = new io.Socket(null, {port:8001, rememberTransport:false});
+    socket = new io.Socket(null, {port:80, rememberTransport:false});
     socket.connect();
 
     // tells the server that the client is ready for data
