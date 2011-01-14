@@ -85,6 +85,20 @@ $(function() {
         }
     });
 
+    $('#resetButton').tap(function() {
+        if (play == true) {
+            $('#playButton').text('Play');
+        }
+
+        play = false;
+        curTime = 0.0;
+        volume = 1.0;
+        socket.send(JSON.stringify(['pause', curTime]));
+        socket.send(JSON.stringify(['volume'. volume]));
+        $('#volume').text(volume);
+        $('#curTime').text(curTime);
+    });
+
     /*
     $('#volumeToggle').tap(function() {
         volume = volume ? 0.0 : 1.0;
