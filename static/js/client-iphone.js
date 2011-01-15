@@ -88,13 +88,14 @@ $(function() {
     $('#resetButton').tap(function() {
         if (play == true) {
             $('#playButton').text('Play');
+            clearInterval(counter);
         }
 
         play = false;
         curTime = 0.0;
         volume = 1.0;
         socket.send(JSON.stringify(['pause', curTime]));
-        socket.send(JSON.stringify(['volume'. volume]));
+        socket.send(JSON.stringify(['volume', volume]));
         $('#volume').text(volume);
         $('#curTime').text(curTime);
     });
