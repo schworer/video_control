@@ -7,6 +7,7 @@ This is a demo-quality node.js app that enables a Mobile Safari client to contro
 This demo is up and running at [go.no.de](http://go.no.de/). Check it out!
 
 # todo
+ * Fix the timer on the iPhone client
  * The timing is generally all messed up.
  * Might want to look into implementing the rv sync messaging protocol, instead of my half baked system.
  * Make the desktop client look halfway decent.
